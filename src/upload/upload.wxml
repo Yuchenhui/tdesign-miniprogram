@@ -78,6 +78,7 @@
             data-index="{{index}}"
             aria-role="button"
             aria-label="删除"
+            wx:if="{{!disabled}}"
           >
             <t-icon name="close" size="32rpx" color="#fff" />
           </view>
@@ -86,7 +87,7 @@
 
       <!-- 添加 -->
       <t-grid-item
-        wx:if="{{customLimit > 0}}"
+        wx:if="{{customLimit > 0 && !disabled}}"
         t-class="{{classPrefix}}__grid"
         t-class-content="{{classPrefix}}__grid-content"
         bindclick="onAddTap"

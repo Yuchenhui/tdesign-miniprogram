@@ -11,6 +11,11 @@ const props: TdCascaderProps = {
     type: Boolean,
     value: true,
   },
+  /** 确认选择按钮 **/
+  selectBtn: {
+    type: Boolean,
+    value: true,
+  },
   /** 用来定义 value / label 在 `options` 中对应的字段别名 */
   keys: {
     type: Object,

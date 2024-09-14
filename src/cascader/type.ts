@@ -16,6 +16,14 @@ export interface TdCascaderProps<CascaderOption extends TreeOptionData = TreeOpt
     value?: boolean;
   };
   /**
+   * 确认选择按钮
+   * @default true
+   */
+  selectBtn?: {
+    type: BooleanConstructor;
+    value?: boolean;
+  };
+  /**
    * 用来定义 value / label 在 `options` 中对应的字段别名
    */
   keys?: {

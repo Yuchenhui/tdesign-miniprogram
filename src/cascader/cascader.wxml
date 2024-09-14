@@ -6,6 +6,10 @@
       <slot name="title" />
       {{title}}
     </view>
+    <view class="{{name}}__select-btn" bind:tap="onSelect">
+      <slot name="select-btn" />
+      <t-icon wx:if="{{selectBtn}}" size="24" name="check" />
+    </view>
     <view class="{{name}}__close-btn" bind:tap="onClose">
       <slot name="close-btn" />
       <t-icon wx:if="{{closeBtn}}" size="48rpx" name="close" />

@@ -100,12 +100,13 @@ export default class Cascader extends SuperComponent {
       const { selectedValue, steps, items } = this.genItems();
       const setData = {
         steps,
+        items,
         selectedValue,
         stepIndex: items.length - 1,
-      }
+      };
 
-      if(items.length > this.data.items.length){
-        Object.assign(setData,{ items })
+      if (items.length > this.data.items.length) {
+        Object.assign(setData, { items });
       }
 
       this.setData(setData);
@@ -211,6 +212,26 @@ export default class Cascader extends SuperComponent {
     onClose() {
       this.hide('close-btn');
     },
+    onSelect() {
+      const { selectedIndexes, items } = this.data;
+      const level = selectedIndexes.length - 1; // 当前选择的层级
+      const value = selectedIndexes[level] !== undefined ? items[level][selectedIndexes[level]].value : null;
+      if (value !== null) {
+        const e = {
+          target: {
+            dataset: {
+              level: level,
+              custom: true,
+            },
+          },
+          detail: {
+            value: value,
+          },
+        };
+        this.handleSelect(e);
+      }
+      this.hide('finish');
+    },
     onStepClick(e) {
       const { index } = e.currentTarget.dataset;
 
@@ -256,7 +277,7 @@ export default class Cascader extends SuperComponent {
       };
     },
     handleSelect(e) {
-      const { level } = e.target.dataset;
+      const { level, custom } = e.target.dataset;
       const { value } = e.detail;
       const { selectedIndexes, items, keys, options } = this.data;
       const index = items[level].findIndex((item) => item[keys?.value ?? 'value'] === value);
@@ -282,7 +303,7 @@ export default class Cascader extends SuperComponent {
 
       this.triggerEvent('pick', { value: item[keys?.value ?? 'value'], index, level });
       const { items: newItems } = this.genItems();
-      if (item?.[keys?.children ?? 'children']?.length) {
+      if (item?.[keys?.children ?? 'children']?.length && custom === undefined) {
         this.setData({
           selectedIndexes,
           [`items[${level + 1}]`]: newItems[level + 1],
@@ -297,7 +318,9 @@ export default class Cascader extends SuperComponent {
             const { items } = this.data;
             this._trigger('change', {
               value: item[keys?.value ?? 'value'],
-              selectedOptions: items.map((item, index) => item[selectedIndexes[index]]),
+              selectedOptions: items
+                .filter((item) => item !== undefined && item !== null)
+                .map((item, index) => item[selectedIndexes[index]]),
             });
           },
         );
