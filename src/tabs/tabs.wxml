@@ -3,7 +3,7 @@
 <wxs src="./tabs.wxs" module="filters" />
 <wxs src="../common/utils.wxs" module="_" />
 
-<view style="{{_._style([style, customStyle])}}" class="{{_.cls(classPrefix, [placement])}} class {{prefix}}-class">
+<view class="{{_.cls(classPrefix, [placement])}} class {{prefix}}-class">
   <t-sticky
     t-class="{{_.cls(classPrefix + '__sticky', [placement])}}"
     disabled="{{ !sticky }}"
@@ -11,6 +11,7 @@
     offset-top="{{ stickyProps.offsetTop || 0 }}"
     container="{{ stickyProps.container }}"
     bind:scroll="onTouchScroll"
+    style="{{_._style([style, customStyle])}}"
   >
     <view class="{{_.cls(classPrefix + '__wrapper', [theme])}}">
       <scroll-view
